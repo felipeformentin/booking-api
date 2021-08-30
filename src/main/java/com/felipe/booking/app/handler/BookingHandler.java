@@ -24,14 +24,12 @@ public class BookingHandler {
                 .bodyToMono(BookingDTO.class)
                 .map(it -> it.toDomain())
                 .flatMap(it -> createBookingUseCase.execute(it))
-                .map(it -> BookingDTO.of(it))
-                .flatMap(it -> ServerResponse.ok().bodyValue(it));
+                .flatMap(it -> ServerResponse.ok().bodyValue(BookingDTO.of(it)));
     }
 
     public Mono<ServerResponse> getRoomAvailability(ServerRequest serverRequest) {
         return Mono.just(serverRequest)
-                .flatMap( it -> getRoomAvailabilityUseCase.execute())
-                .map( it -> RoomAvailabilityDTO.of(it))
-                .flatMap(it -> ServerResponse.ok().bodyValue(it));
+                .flatMap(it -> getRoomAvailabilityUseCase.execute())
+                .flatMap(it -> ServerResponse.ok().bodyValue(RoomAvailabilityDTO.of(it)));
     }
 }
