@@ -5,6 +5,7 @@ import com.felipe.booking.alten.app.entity.BookingLockEntity
 import com.felipe.booking.alten.app.gateway.database.BookingLockRepository
 import com.felipe.booking.alten.app.gateway.database.BookingRepository
 import com.felipe.booking.alten.domain.gateway.BookingDataSourceGateway
+import com.felipe.booking.alten.domain.model.Booking
 import com.felipe.booking.alten.domain.model.BookingLock
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
@@ -21,16 +22,10 @@ class BookingDataSourceGatewayImpl(
         const val ROOM_ID = "FIXED_ROOM_ID"
     }
 
-    override fun createBooking(lock: BookingLock) =
-        bookingRepository.save(
-            BookingEntity(
-                null,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-            )
-        ).map { it.toDomain() }
+    override fun createBooking(booking: Booking, lock: BookingLock) =
+        bookingRepository
+            .save(BookingEntity.of(booking))
+            .map { it.toDomain() }
 
     override fun getLock(): Mono<BookingLock> =
         bookingLockRepository.findById(ROOM_ID)

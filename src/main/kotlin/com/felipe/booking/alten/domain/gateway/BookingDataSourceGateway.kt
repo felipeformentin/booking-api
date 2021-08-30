@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono
 
 interface BookingDataSourceGateway {
 
-    fun createBooking(lock: BookingLock): Mono<Booking>
+    fun createBooking(booking: Booking, lock: BookingLock): Mono<Booking>
     fun getLock(): Mono<BookingLock>
 }

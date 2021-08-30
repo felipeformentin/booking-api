@@ -10,8 +10,8 @@ class CreateBookingUseCase(
     private val bookingRepositoryGateway: BookingDataSourceGateway
 ) {
 
-    fun execute(): Mono<Booking> =
+    fun execute(booking: Booking): Mono<Booking> =
         bookingRepositoryGateway
             .getLock()
-            .flatMap { bookingRepositoryGateway.createBooking(it) }
+            .flatMap { lock -> bookingRepositoryGateway.createBooking(booking, lock) }
 }

@@ -14,6 +14,18 @@ data class BookingEntity(
     val creationDate: LocalDateTime,
     val updateDate: LocalDateTime,
 ) {
+
+    companion object {
+        fun of(booking: Booking) =
+            BookingEntity(
+                id = null,
+                checkInDate = booking.checkInDate,
+                checkOutDate = booking.checkOutDate,
+                creationDate = LocalDateTime.now(),
+                updateDate = LocalDateTime.now()
+            )
+    }
+
     fun toDomain() =
         Booking(
             checkInDate = checkInDate,
