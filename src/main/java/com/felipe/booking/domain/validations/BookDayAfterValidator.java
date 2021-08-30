@@ -21,6 +21,6 @@ public class BookDayAfterValidator implements BookingValidator<Booking> {
     }
 
     private boolean isBookingBeforeTomorrow(LocalDateTime checkInDate) {
-       return ChronoUnit.DAYS.between(LocalDateTime.now(), checkInDate) < 1;
+       return ChronoUnit.DAYS.between(LocalDateTime.now(), checkInDate) <= 1;
     }
 }

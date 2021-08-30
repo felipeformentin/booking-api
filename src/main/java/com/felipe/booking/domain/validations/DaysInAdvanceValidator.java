@@ -16,13 +16,13 @@ public class DaysInAdvanceValidator implements BookingValidator<Booking> {
 
     @Override
     public Mono<Booking> validate(Booking booking) {
-        if (isBookingDateAllowed(booking.getCheckInDate()))
+        if (isBookingDateNotAllowed(booking.getCheckInDate()))
             return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "You can't book more than 30 days in advance."));
         return Mono.empty();
     }
 
-    private boolean isBookingDateAllowed(LocalDateTime checkInDate) {
+    private boolean isBookingDateNotAllowed(LocalDateTime checkInDate) {
        return ChronoUnit.DAYS.between(LocalDateTime.now(), checkInDate) > DAYS_IN_ADVANCE;
     }
 }
