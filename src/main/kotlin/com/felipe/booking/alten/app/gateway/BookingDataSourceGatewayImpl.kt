@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 import reactor.kotlin.core.publisher.switchIfEmpty
+import java.util.stream.Collectors
 
 @Component
 class BookingDataSourceGatewayImpl(
@@ -32,4 +33,10 @@ class BookingDataSourceGatewayImpl(
             .findById(ROOM_ID)
             .switchIfEmpty { bookingLockRepository.save(BookingLockEntity(roomId = ROOM_ID, null)) }
             .map { it.toDomain() }
+
+    override fun findAllBookings(): Mono<List<Booking>> =
+        bookingRepository
+            .findAll()
+            .map { it.toDomain() }
+            .collectList()
 }

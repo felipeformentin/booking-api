@@ -19,8 +19,9 @@ class ServerRouting(
     @Bean
     fun bookingRoutes() =
         router {
-            ("/room/{id}/booking" and accept(MediaType.APPLICATION_JSON)).nest {
-                POST(bookingHandler::createBooking)
+            ("/room/{id}" and accept(MediaType.APPLICATION_JSON)).nest {
+                POST("/booking", bookingHandler::createBooking)
+                GET("/availability", bookingHandler::getRoomAvailability)
             }
             onError<ResponseStatusException> { exception, serverRequest -> handleResponseStatusException(exception, serverRequest) }
         }

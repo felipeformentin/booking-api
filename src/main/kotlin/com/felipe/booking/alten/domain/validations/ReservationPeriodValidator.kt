@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit
 class ReservationPeriodValidator: BookingValidator<Booking> {
 
     companion object {
-        const val MAX_STAY = 3
+        const val MAX_STAY = 2
     }
 
     override fun validate(booking: Booking): Mono<Booking> =
