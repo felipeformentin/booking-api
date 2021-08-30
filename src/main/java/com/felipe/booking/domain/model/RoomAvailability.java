@@ -1,12 +1,14 @@
 package com.felipe.booking.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class RoomAvailability {
-    private List<LocalDateTime> daysAvailable;
-    private List<LocalDateTime> daysBooked;
+    private List<LocalDate> daysAvailable;
+    private List<LocalDate> daysBooked;
 }
