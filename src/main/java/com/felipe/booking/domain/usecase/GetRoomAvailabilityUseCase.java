@@ -1,5 +1,6 @@
 package com.felipe.booking.domain.usecase;
 
+import com.felipe.booking.domain.gateway.BookingAvailabilityGateway;
 import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
 import com.felipe.booking.domain.model.Booking;
 import com.felipe.booking.domain.model.RoomAvailability;
@@ -21,28 +22,13 @@ public class GetRoomAvailabilityUseCase {
     @Autowired
     private BookingDataSourceGateway bookingRepositoryGateway;
 
-    public Mono<RoomAvailability> execute() {
-        return bookingRepositoryGateway
-            .findAllBookings()
-            .map ( bookings -> getBookedDays(bookings) )
-            .map ( bookedDays -> getRoomAvailability(bookedDays) );
-    }
+    @Autowired
+    private BookingAvailabilityGateway bookingAvailabilityGateway;
 
-    private Set<LocalDate> getBookedDays(List<Booking> bookings) {
-        Set<LocalDate> bookedDays = new HashSet<>();
-        bookings.forEach (
-            booking -> {
-                LocalDate checkIn = booking.getCheckInDate().toLocalDate();
-                LocalDate checkOut = booking.getCheckOutDate().toLocalDate();
-                Long daysBetween = ChronoUnit.DAYS.between(checkIn, checkOut);
-                if (daysBetween == 2L) {
-                    bookedDays.add(checkIn.plusDays(1));
-                }
-                bookedDays.add(checkIn);
-                bookedDays.add(checkOut);
-            }
-        );
-        return bookedDays;
+    public Mono<RoomAvailability> execute() {
+        return bookingAvailabilityGateway
+                .getBookedDays()
+                .map ( bookedDays -> getRoomAvailability(bookedDays) );
     }
 
     private RoomAvailability getRoomAvailability(Set<LocalDate> bookedDays) {

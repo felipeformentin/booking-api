@@ -16,6 +16,7 @@ public class BookingLockEntity {
     @Version
     private Long version;
 
+    public static BookingLockEntity of(BookingLock lock) { return new BookingLockEntity(lock.getRoomId(), lock.getVersion()); }
     public BookingLock toDomain() {
         return new BookingLock(roomId, version);
     }
