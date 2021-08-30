@@ -28,7 +28,8 @@ class BookingDataSourceGatewayImpl(
             .map { it.toDomain() }
 
     override fun getLock(): Mono<BookingLock> =
-        bookingLockRepository.findById(ROOM_ID)
+        bookingLockRepository
+            .findById(ROOM_ID)
             .switchIfEmpty { bookingLockRepository.save(BookingLockEntity(roomId = ROOM_ID, null)) }
             .map { it.toDomain() }
 }
