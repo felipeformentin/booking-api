@@ -1,13 +1,12 @@
-/*
-package com.felipe.booking.alten.domain.usecase;
+package com.felipe.booking.domain.usecase;
 
-import com.felipe.booking.alten.domain.gateway.BookingDataSourceGateway;
-import com.felipe.booking.alten.domain.model.Booking;
-import com.felipe.booking.alten.domain.model.RoomAvailability;
+import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
+import com.felipe.booking.domain.model.Booking;
 import com.felipe.booking.domain.model.RoomAvailability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -69,4 +68,4 @@ public class GetRoomAvailabilityUseCase {
         }
         return possibleDays;
     }
-}*/
+}
