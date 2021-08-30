@@ -32,6 +32,7 @@ public class BookingEntity {
 
     public Booking toDomain() {
         return new Booking(
+                null,
                 this.checkInDate,
                 this.checkOutDate
         );

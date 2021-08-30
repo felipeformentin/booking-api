@@ -1,6 +1,6 @@
 package com.felipe.booking.app.config.routing;
 
-import com.felipe.booking.app.dto.ValidationErrorDTO;
+import com.felipe.booking.app.dto.response.ValidationErrorDTO;
 import com.felipe.booking.app.handler.BookingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class ServerRouting {
 
     @Bean
     public RouterFunction<ServerResponse> bookingRoutes() {
-        return route(POST("/room/{id}/booking"), bookingHandler::createBooking)
+        return route(POST("/room/{id}/booking"), bookingHandler::saveBooking)
         .andRoute(GET("/room/{id}/availability"), bookingHandler::getRoomAvailability)
         .filter(badRequestHandler());
     }

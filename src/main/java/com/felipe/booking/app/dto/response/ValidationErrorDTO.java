@@ -1,4 +1,4 @@
-package com.felipe.booking.app.dto;
+package com.felipe.booking.app.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

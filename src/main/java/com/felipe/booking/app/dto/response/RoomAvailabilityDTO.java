@@ -1,4 +1,4 @@
-package com.felipe.booking.app.dto;
+package com.felipe.booking.app.dto.response;
 
 import com.felipe.booking.domain.model.RoomAvailability;
 import lombok.AllArgsConstructor;

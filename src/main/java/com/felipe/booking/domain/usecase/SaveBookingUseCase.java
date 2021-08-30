@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class CreateBookingUseCase {
+public class SaveBookingUseCase {
 
     @Autowired
     private ValidateBookingUseCase validateBookingUseCase;
@@ -27,6 +27,6 @@ public class CreateBookingUseCase {
         return validateBookingUseCase
                 .validate(booking)
                 .switchIfEmpty( Mono.defer(() ->
-                        bookingDataSourceGateway.createBooking(booking, lock)));
+                        bookingDataSourceGateway.saveBooking(booking, lock)));
         }
 }

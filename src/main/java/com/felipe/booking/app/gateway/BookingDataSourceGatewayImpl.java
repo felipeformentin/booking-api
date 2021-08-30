@@ -42,10 +42,24 @@ public class BookingDataSourceGatewayImpl implements BookingDataSourceGateway {
     }
 
     @Override
-    public Mono<Booking> createBooking(Booking booking, BookingLock lock) {
+    public Mono<Booking> saveBooking(Booking booking, BookingLock lock) {
         return bookingLockRepository
                 .save(BookingLockEntity.of(lock))
                 .flatMap(it -> bookingRepository.save(BookingEntity.of(booking)))
                 .map(bookingEntity ->  bookingEntity.toDomain() );
+    }
+
+    @Override
+    public Mono<Void> deleteBooking(String id, BookingLock lock) {
+        return bookingLockRepository
+                .save(BookingLockEntity.of(lock))
+                .flatMap(it -> bookingRepository.deleteById(id));
+    }
+
+    @Override
+    public Mono<Booking> findBooking(String id) {
+        return bookingRepository
+                .findById(id)
+                .map(bookingEntity -> bookingEntity.toDomain());
     }
 }

@@ -9,5 +9,7 @@ import java.util.List;
 public interface BookingDataSourceGateway {
     Mono<BookingLock> getLock();
     Mono<List<Booking>> findAllBookings();
-    Mono<Booking> createBooking(Booking booking, BookingLock lock);
+    Mono<Booking> saveBooking(Booking booking, BookingLock lock);
+    Mono<Void> deleteBooking(String id, BookingLock lock);
+    Mono<Booking> findBooking(String id);
 }

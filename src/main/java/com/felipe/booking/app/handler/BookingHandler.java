@@ -1,10 +1,14 @@
 package com.felipe.booking.app.handler;
 
-import com.felipe.booking.app.dto.BookingDTO;
-import com.felipe.booking.app.dto.RoomAvailabilityDTO;
-import com.felipe.booking.domain.usecase.CreateBookingUseCase;
+import com.felipe.booking.app.dto.request.BookingRequestDTO;
+import com.felipe.booking.app.dto.response.BookingResponseDTO;
+import com.felipe.booking.app.dto.response.RoomAvailabilityDTO;
+import com.felipe.booking.domain.usecase.DeleteBookingUseCase;
+import com.felipe.booking.domain.usecase.FindBookingUseCase;
+import com.felipe.booking.domain.usecase.SaveBookingUseCase;
 import com.felipe.booking.domain.usecase.GetRoomAvailabilityUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -14,17 +18,43 @@ import reactor.core.publisher.Mono;
 public class BookingHandler {
 
     @Autowired
-    private CreateBookingUseCase createBookingUseCase;
+    private SaveBookingUseCase saveBookingUseCase;
+
+    @Autowired
+    private DeleteBookingUseCase deleteBookingUseCase;
+
+    @Autowired
+    private FindBookingUseCase findBookingUseCase;
 
     @Autowired
     private GetRoomAvailabilityUseCase getRoomAvailabilityUseCase;
 
     public Mono<ServerResponse> createBooking(ServerRequest serverRequest) {
         return serverRequest
-                .bodyToMono(BookingDTO.class)
+                .bodyToMono(BookingRequestDTO.class)
                 .map(it -> it.toDomain())
-                .flatMap(it -> createBookingUseCase.execute(it))
-                .flatMap(it -> ServerResponse.ok().bodyValue(BookingDTO.of(it)));
+                .flatMap(it -> saveBookingUseCase.execute(it))
+                .flatMap(it -> ServerResponse.status(HttpStatus.CREATED).bodyValue(BookingRequestDTO.of(it)));
+    }
+
+    public Mono<ServerResponse> saveBooking(ServerRequest serverRequest) {
+        return serverRequest
+                .bodyToMono(BookingRequestDTO.class)
+                .map(it -> it.toDomain())
+                .flatMap(it -> saveBookingUseCase.execute(it))
+                .flatMap(it -> ServerResponse.status(HttpStatus.ACCEPTED).bodyValue(BookingRequestDTO.of(it)));
+    }
+
+    public Mono<ServerResponse> deleteBooking(ServerRequest serverRequest) {
+        return Mono.just(serverRequest)
+                .flatMap(it -> deleteBookingUseCase.delete(serverRequest.pathVariable("bookingId")))
+                .flatMap(it -> ServerResponse.noContent().build());
+    }
+
+    public Mono<ServerResponse> findBooking(ServerRequest serverRequest) {
+        return Mono.just(serverRequest)
+                .flatMap(it -> findBookingUseCase.find(serverRequest.pathVariable("bookingId")))
+                .flatMap(it -> ServerResponse.ok().bodyValue(BookingResponseDTO.of(it)));
     }
 
     public Mono<ServerResponse> getRoomAvailability(ServerRequest serverRequest) {
@@ -32,4 +62,5 @@ public class BookingHandler {
                 .flatMap(it -> getRoomAvailabilityUseCase.execute())
                 .flatMap(it -> ServerResponse.ok().bodyValue(RoomAvailabilityDTO.of(it)));
     }
+
 }
