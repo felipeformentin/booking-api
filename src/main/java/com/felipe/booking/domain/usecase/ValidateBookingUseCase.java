@@ -23,6 +23,6 @@ public class ValidateBookingUseCase {
     private Mono<Booking> executeValidations(Booking booking) {
      return Flux.fromIterable(validators)
                 .flatMap ( validator -> validator.validate(booking) )
-                .collectList();
+                .singleOrEmpty();
     }
 }

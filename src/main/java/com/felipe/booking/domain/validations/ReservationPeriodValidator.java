@@ -18,7 +18,7 @@ public class ReservationPeriodValidator implements BookingValidator<Booking> {
     public Mono<Booking> validate(Booking booking) {
         if (bookingPeriodNotAllowed(booking.getCheckInDate(), booking.getCheckOutDate()))
             return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Your stay is longer than the maximum period allowed ($MAX_STAY days)"));
+                    "Your stay is longer than the maximum period allowed (3 days)"));
         return Mono.empty();
     }
 

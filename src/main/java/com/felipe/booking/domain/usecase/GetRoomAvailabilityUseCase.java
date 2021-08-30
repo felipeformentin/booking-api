@@ -33,7 +33,7 @@ public class GetRoomAvailabilityUseCase {
         bookings.forEach (
             booking -> {
                 LocalDate checkIn = booking.getCheckInDate().toLocalDate();
-                LocalDate checkOut = booking.getCheckInDate().toLocalDate();
+                LocalDate checkOut = booking.getCheckOutDate().toLocalDate();
                 Long daysBetween = ChronoUnit.DAYS.between(checkIn, checkOut);
                 if (daysBetween == 2L) {
                     bookedDays.add(checkIn.plusDays(1));
