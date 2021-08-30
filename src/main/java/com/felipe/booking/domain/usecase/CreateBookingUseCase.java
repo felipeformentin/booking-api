@@ -4,8 +4,10 @@ import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
 import com.felipe.booking.domain.model.Booking;
 import com.felipe.booking.domain.model.BookingLock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public class CreateBookingUseCase {
 
     @Autowired
