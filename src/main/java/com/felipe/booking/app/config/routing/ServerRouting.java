@@ -11,8 +11,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 
@@ -24,9 +23,12 @@ public class ServerRouting {
 
     @Bean
     public RouterFunction<ServerResponse> bookingRoutes() {
-        return route(POST("/room/{id}/booking"), bookingHandler::saveBooking)
-        .andRoute(GET("/room/{id}/availability"), bookingHandler::getRoomAvailability)
-        .filter(badRequestHandler());
+        return route(POST("/booking"), bookingHandler::createBooking)
+                .andRoute(PUT("/booking"), bookingHandler::saveBooking)
+                .andRoute(GET("/booking/{bookingId}"), bookingHandler::findBooking)
+                .andRoute(DELETE("/booking/{bookingId}"), bookingHandler::deleteBooking)
+                .andRoute(GET("/availability"), bookingHandler::getRoomAvailability)
+                .filter(badRequestHandler());
     }
 
     private HandlerFilterFunction<ServerResponse, ServerResponse> badRequestHandler() {
