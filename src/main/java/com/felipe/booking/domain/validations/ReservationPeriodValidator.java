@@ -23,6 +23,6 @@ public class ReservationPeriodValidator implements BookingValidator<Booking> {
     }
 
     private boolean bookingPeriodNotAllowed(LocalDateTime checkInDate, LocalDateTime checkOutDate) {
-       return ChronoUnit.DAYS.between(checkInDate, checkOutDate) > MAX_STAY;
+       return ChronoUnit.DAYS.between(checkInDate.toLocalDate(), checkOutDate.toLocalDate()) > MAX_STAY;
     }
 }

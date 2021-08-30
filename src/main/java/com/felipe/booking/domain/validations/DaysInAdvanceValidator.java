@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -23,6 +24,6 @@ public class DaysInAdvanceValidator implements BookingValidator<Booking> {
     }
 
     private boolean isBookingDateNotAllowed(LocalDateTime checkInDate) {
-       return ChronoUnit.DAYS.between(LocalDateTime.now(), checkInDate) > DAYS_IN_ADVANCE;
+       return ChronoUnit.DAYS.between(LocalDate.now(), checkInDate.toLocalDate()) > DAYS_IN_ADVANCE;
     }
 }
