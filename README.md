@@ -1,4 +1,4 @@
-#ALTEN BOOKING API PROJECT
+# ALTEN BOOKING API PROJECT
 
 This project contains APIs responsible for booking rooms for a hotel.
 
@@ -6,7 +6,7 @@ This project contains APIs responsible for booking rooms for a hotel.
 
 [TOC]
 
-###HOW TO RUN
+### HOW TO RUN
 
 Run with docker-compose:
 
@@ -15,13 +15,13 @@ Run with docker-compose:
 Postman Collection available on root folder:
 **"Alten Booking.postman_collection.json"**
 
-###CORE TECHNOLOGIES
+### CORE TECHNOLOGIES
 
 - Java 11
 - Spring Webflux 
 - MongoDB 
 
-###APIS
+### APIS
 
 - **GET /booking/{bookingId}** -> Returns Booking Entity with Status 200
 or Status 404 when ID does not exist.
@@ -38,7 +38,7 @@ or does not exist.
 - **GET /availability** -> Returns two lists, one containing the dates available,
 and the other containing already booked dates.
 
-###VALIDATIONS
+### VALIDATIONS
 
 - BookDayAfterValidator -> Check if checkIn date is 1 day after the current one.
 
@@ -52,7 +52,7 @@ and the other containing already booked dates.
 
 - ReservationPeriodValidator -> Guarantees that the booking won't be longer than 3 days.
 
-###FUTURE IMPROVEMENTS
+### FUTURE IMPROVEMENTS
 
 - Circuit break could be implemented so client doesn't get stuck when DB is down
 
@@ -70,7 +70,7 @@ and the other containing already booked dates.
 
 - Add logs
 
-###COMMENTS
+### COMMENTS
 
 - Why I didn’t use @Transaction ? -> Since I create a new Booking Entity, Transactional
 wouldn't help me lock the dates, so I decided to implement Optimistic Lock
