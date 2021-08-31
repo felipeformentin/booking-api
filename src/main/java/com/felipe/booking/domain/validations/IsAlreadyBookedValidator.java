@@ -21,9 +21,15 @@ public class IsAlreadyBookedValidator implements BookingValidator<Booking> {
 
     @Override
     public Mono<Booking> validate(Booking booking) {
-        return bookingAvailabilityGateway
-                .getBookedDaysMinusCurrentBooking(booking)
-                .flatMap(bookedDays ->  getBookingMono(booking, bookedDays));
+        if (booking.getId() != null) {
+            return bookingAvailabilityGateway
+                    .getBookedDaysMinusCurrentBooking(booking)
+                    .flatMap(bookedDays ->  getBookingMono(booking, bookedDays));
+        } else {
+            return bookingAvailabilityGateway
+                    .getBookedDays()
+                    .flatMap(bookedDays ->  getBookingMono(booking, bookedDays));
+        }
     }
 
     private Mono<Booking> getBookingMono(Booking booking, Set<LocalDate> bookedDays) {
