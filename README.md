@@ -66,6 +66,8 @@ and the other containing already booked dates.
 
 - Add logs
 
+- Add swagger
+
 ### COMMENTS
 
 - Why I didn’t use @Transaction ? -> Since I create a new Booking Entity, Transactional
