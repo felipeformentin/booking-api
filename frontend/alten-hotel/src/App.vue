@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <img id="logo" alt="Vue logo" src="./assets/logo.png">
-    <Main msg="Welcome to Alten Hotel"/>
-    <Calendar msg="Welcome to Your Vue.js App"/>
+    <Main/>
+    <Calendar/>
   </div>
 </template>
 
@@ -26,6 +25,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
+
