@@ -1,10 +1,13 @@
-ALTEN BOOKING API PROJECT
+**ALTEN BOOKING API PROJECT**
 
 This project contains APIs responsible for booking rooms for a hotel.
 
 **HOW TO RUN**
 
-**REQUIREMENTS**
+Run MongoDB:
+
+$docker run -p 27017:27017 --name mongodb mongo
+
 
 **APIS**
 
@@ -36,7 +39,3 @@ and the other containing already booked dates.
 - IsCheckOutAfterCheckInValidator -> Validates if checkOut is after checkIn date.
 
 - ReservationPeriodValidator -> Guarantees that the booking won't be longer than 3 days.
-
-**PREMISSES**
-
-- User can only book working with Days unit

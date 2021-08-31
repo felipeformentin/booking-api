@@ -1,0 +1,17 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo-alten:
+    image: mongo
+    container_name: 'mongo-alten'
+    ports:
+      - 27017:27017
+
+  alten:
+    image: felipeformentin/alten-booking
+    ports:
+      - 8080:8080
+    links:
+      - mongo-alten
