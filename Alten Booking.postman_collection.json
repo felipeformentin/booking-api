@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "2a87efd4-8b30-435e-aa91-5dbb88814bea",
+		"name": "Alten Booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"checkInDate\" : \"2021-09-03T12:30:00\",\n    \"checkOutDate\" :  \"2021-09-03T12:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/booking",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Booking",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"checkInDate\" : \"2021-09-02T12:30:00\",\n    \"checkOutDate\" :  \"2021-09-03T12:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/booking/612d66dab416c64a3465060e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"612d66dab416c64a3465060e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"checkInDate\" : \"2021-09-02T12:30:00\",\n    \"checkOutDate\" :  \"2021-09-03T12:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/booking/612d66dab416c64a3465060e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"612d66dab416c64a3465060e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Booking",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"checkInDate\" : \"2021-09-02T12:30:00\",\n    \"checkOutDate\" :  \"2021-09-03T12:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/booking/612d66dab416c64a3465060e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"612d66dab416c64a3465060e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Availability",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"checkInDate\" : \"2021-09-02T12:30:00\",\n    \"checkOutDate\" :  \"2021-09-03T12:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/booking/availability",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -12,6 +12,9 @@ Run with docker-compose:
 
 `$docker-compose up`
 
+Postman Collection available on root folder:
+**"Alten Booking.postman_collection.json"**
+
 ###CORE TECHNOLOGIES
 
 - Java 11
