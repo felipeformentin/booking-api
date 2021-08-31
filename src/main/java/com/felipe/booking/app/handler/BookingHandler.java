@@ -57,7 +57,9 @@ public class BookingHandler {
     public Mono<ServerResponse> findBooking(ServerRequest serverRequest) {
         return Mono.just(serverRequest)
                 .flatMap(it -> findBookingUseCase.find(serverRequest.pathVariable("bookingId")))
-                .flatMap(it -> ServerResponse.ok().bodyValue(BookingResponseDTO.of(it)));
+                .flatMap(it -> ServerResponse.ok().bodyValue(BookingResponseDTO.of(it)))
+                .switchIfEmpty( Mono.defer(() -> ServerResponse.notFound().build()));
+
     }
 
     public Mono<ServerResponse> getRoomAvailability(ServerRequest serverRequest) {
