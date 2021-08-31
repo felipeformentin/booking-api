@@ -1,6 +1,7 @@
 package com.felipe.booking.domain.validations;
 
 import com.felipe.booking.domain.gateway.BookingAvailabilityGateway;
+import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
 import com.felipe.booking.domain.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class IsAlreadyBookedValidator implements BookingValidator<Booking> {
     @Override
     public Mono<Booking> validate(Booking booking) {
         return bookingAvailabilityGateway
-                .getBookedDays()
+                .getBookedDaysMinusCurrentBooking(booking)
                 .flatMap(bookedDays ->  getBookingMono(booking, bookedDays));
     }
 

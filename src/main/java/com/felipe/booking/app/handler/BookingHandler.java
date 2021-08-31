@@ -14,6 +14,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 @Component
 public class BookingHandler {
 
@@ -34,15 +36,15 @@ public class BookingHandler {
                 .bodyToMono(BookingRequestDTO.class)
                 .map(it -> it.toDomain())
                 .flatMap(it -> saveBookingUseCase.execute(it))
-                .flatMap(it -> ServerResponse.status(HttpStatus.CREATED).bodyValue(BookingRequestDTO.of(it)));
+                .flatMap(it -> ServerResponse.created(URI.create(it.getId())).bodyValue(BookingResponseDTO.of(it)));
     }
 
     public Mono<ServerResponse> saveBooking(ServerRequest serverRequest) {
         return serverRequest
                 .bodyToMono(BookingRequestDTO.class)
-                .map(it -> it.toDomain())
+                .map(it -> it.toDomain(serverRequest.pathVariable("bookingId")))
                 .flatMap(it -> saveBookingUseCase.execute(it))
-                .flatMap(it -> ServerResponse.status(HttpStatus.ACCEPTED).bodyValue(BookingRequestDTO.of(it)));
+                .flatMap(it -> ServerResponse.status(HttpStatus.ACCEPTED).bodyValue(BookingResponseDTO.of(it)));
     }
 
     public Mono<ServerResponse> deleteBooking(ServerRequest serverRequest) {

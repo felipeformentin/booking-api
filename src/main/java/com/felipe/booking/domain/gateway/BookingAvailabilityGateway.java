@@ -10,4 +10,5 @@ import java.util.Set;
 
 public interface BookingAvailabilityGateway {
     Mono<Set<LocalDate>> getBookedDays();
+    Mono<Set<LocalDate>> getBookedDaysMinusCurrentBooking(Booking booking);
 }

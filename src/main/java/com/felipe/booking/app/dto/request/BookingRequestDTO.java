@@ -19,4 +19,8 @@ public class BookingRequestDTO {
     public Booking toDomain() {
         return new Booking(null, this.checkInDate, this.checkOutDate);
     }
+
+    public Booking toDomain(String id) {
+        return new Booking(id, this.checkInDate, this.checkOutDate);
+    }
 }

@@ -24,7 +24,7 @@ public class ServerRouting {
     @Bean
     public RouterFunction<ServerResponse> bookingRoutes() {
         return route(POST("/booking"), bookingHandler::createBooking)
-                .andRoute(PUT("/booking"), bookingHandler::saveBooking)
+                .andRoute(PUT("/booking/{bookingId}"), bookingHandler::saveBooking)
                 .andRoute(GET("/booking/{bookingId}"), bookingHandler::findBooking)
                 .andRoute(DELETE("/booking/{bookingId}"), bookingHandler::deleteBooking)
                 .andRoute(GET("/availability"), bookingHandler::getRoomAvailability)
@@ -36,6 +36,9 @@ public class ServerRouting {
                 .onErrorResume(OptimisticLockingFailureException.class,
                         e -> ServerResponse.badRequest().bodyValue(new ValidationErrorDTO("Someone was booking the room at the same time. Please try again later.")))
                 .onErrorResume(ResponseStatusException.class,
-                        e -> ServerResponse.badRequest().bodyValue(new ValidationErrorDTO(e.getReason())));
+                        e -> {
+                            if (e.getRawStatusCode() == 404) return ServerResponse.notFound().build();
+                            return ServerResponse.badRequest().bodyValue(new ValidationErrorDTO(e.getReason()));
+                        });
     }
 }

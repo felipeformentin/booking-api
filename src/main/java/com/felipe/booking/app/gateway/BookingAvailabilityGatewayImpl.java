@@ -1,7 +1,5 @@
 package com.felipe.booking.app.gateway;
 
-import com.felipe.booking.app.entity.BookingEntity;
-import com.felipe.booking.app.gateway.database.BookingRepository;
 import com.felipe.booking.domain.gateway.BookingAvailabilityGateway;
 import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
 import com.felipe.booking.domain.model.Booking;
@@ -28,6 +26,13 @@ public class BookingAvailabilityGatewayImpl implements BookingAvailabilityGatewa
                 .map (bookings -> getBookedDays(bookings) );
     }
 
+    @Override
+    public Mono<Set<LocalDate>> getBookedDaysMinusCurrentBooking(Booking booking) {
+        return getBookedDays()
+                .flatMap(bookedDays -> bookingDataSourceGateway.findBooking(booking.getId())
+                        .map(entity -> removeCurrentBookingFromSet(booking, bookedDays)));
+    }
+
     private Set<LocalDate> getBookedDays(List<Booking> bookings) {
         Set<LocalDate> bookedDays = new HashSet<>();
         bookings.forEach (
@@ -42,6 +47,16 @@ public class BookingAvailabilityGatewayImpl implements BookingAvailabilityGatewa
                     bookedDays.add(checkOut);
                 }
         );
+        return bookedDays;
+    }
+
+    private Set<LocalDate> removeCurrentBookingFromSet(Booking booking, Set<LocalDate> bookedDays) {
+        bookedDays.remove(booking.getCheckInDate().toLocalDate());
+        bookedDays.remove(booking.getCheckOutDate().toLocalDate());
+        if (ChronoUnit.DAYS.between(booking.getCheckInDate().toLocalDate(),
+                booking.getCheckOutDate().toLocalDate()) == 2) {
+            bookedDays.remove(booking.getCheckInDate().plusDays(1).toLocalDate());
+        }
         return bookedDays;
     }
 }

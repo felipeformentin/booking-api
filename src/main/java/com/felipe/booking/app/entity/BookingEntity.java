@@ -17,22 +17,18 @@ public class BookingEntity {
     private String id;
     private LocalDateTime checkInDate;
     private LocalDateTime checkOutDate;
-    private LocalDateTime creationDate;
-    private LocalDateTime updateDate;
 
     public static BookingEntity of(Booking booking) {
         return new BookingEntity(
-                null,
+                booking.getId(),
                 booking.getCheckInDate(),
-                booking.getCheckOutDate(),
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                booking.getCheckOutDate()
         );
     }
 
     public Booking toDomain() {
         return new Booking(
-                null,
+                id,
                 this.checkInDate,
                 this.checkOutDate
         );
