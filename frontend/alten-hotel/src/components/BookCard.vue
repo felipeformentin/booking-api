@@ -14,11 +14,35 @@
       <b-button href="#"  class="mr-2" variant="success">Update Booking</b-button>
       <b-button href="#"   class="ml-2" variant="danger">Delete Booking</b-button>
     </b-card>
+
+       {{ user }}
   </div>
 </template>
 
 <script>
-export default {
-  methods: {},
-};
+  import axios from "axios";
+
+  export default {
+   name: "User",
+   data() {
+     return {
+       user: {},
+     };
+   },
+   created() {
+     this.getUser();
+   },
+   methods: {
+     getUser() {
+       axios
+         .get("http://localhost:8080/availability")
+         .then((res) => {
+           this.user = res.data;
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+     },
+   },
+  };
 </script>
