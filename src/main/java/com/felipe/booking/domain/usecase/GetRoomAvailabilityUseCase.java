@@ -20,9 +20,6 @@ import java.util.Set;
 public class GetRoomAvailabilityUseCase {
 
     @Autowired
-    private BookingDataSourceGateway bookingRepositoryGateway;
-
-    @Autowired
     private BookingAvailabilityGateway bookingAvailabilityGateway;
 
     public Mono<RoomAvailability> execute() {
