@@ -1,4 +1,4 @@
-# alten-booking
+# alten-hotel
 
 ## Project setup
 ```
