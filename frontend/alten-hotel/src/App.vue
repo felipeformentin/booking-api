@@ -2,18 +2,22 @@
   <div id="app">
     <Main/>
     <Calendar/>
+    <BookCard/>
   </div>
 </template>
 
 <script>
 import Main from './components/Main.vue'
 import Calendar from './components/Calendar.vue'
+import BookCard from './components/BookCard.vue'
+
 
 export default {
   name: 'App',
   components: {
     Main,
-    Calendar
+    Calendar,
+    BookCard
   }
 }
 </script>
