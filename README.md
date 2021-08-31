@@ -2,10 +2,6 @@
 
 This project contains APIs responsible for booking rooms for a hotel.
 
-**Table of Contents**
-
-[TOC]
-
 ### HOW TO RUN
 
 Run with docker-compose:
