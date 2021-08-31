@@ -50,7 +50,8 @@ public class BookingHandler {
     public Mono<ServerResponse> deleteBooking(ServerRequest serverRequest) {
         return Mono.just(serverRequest)
                 .flatMap(it -> deleteBookingUseCase.delete(serverRequest.pathVariable("bookingId")))
-                .flatMap(it -> ServerResponse.noContent().build());
+                .flatMap(it -> ServerResponse.noContent().build())
+                .switchIfEmpty( Mono.defer(() -> ServerResponse.noContent().build()));
     }
 
     public Mono<ServerResponse> findBooking(ServerRequest serverRequest) {
