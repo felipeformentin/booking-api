@@ -3,10 +3,7 @@ package com.felipe.booking.app.handler;
 import com.felipe.booking.app.dto.request.BookingRequestDTO;
 import com.felipe.booking.app.dto.response.BookingResponseDTO;
 import com.felipe.booking.app.dto.response.RoomAvailabilityDTO;
-import com.felipe.booking.domain.usecase.DeleteBookingUseCase;
-import com.felipe.booking.domain.usecase.FindBookingUseCase;
-import com.felipe.booking.domain.usecase.SaveBookingUseCase;
-import com.felipe.booking.domain.usecase.GetRoomAvailabilityUseCase;
+import com.felipe.booking.domain.usecase.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -27,6 +24,9 @@ public class BookingHandler {
 
     @Autowired
     private FindBookingUseCase findBookingUseCase;
+
+    @Autowired
+    private FindAllBookingsUseCase findAllBookingsUseCase;
 
     @Autowired
     private GetRoomAvailabilityUseCase getRoomAvailabilityUseCase;
@@ -57,6 +57,14 @@ public class BookingHandler {
     public Mono<ServerResponse> findBooking(ServerRequest serverRequest) {
         return Mono.just(serverRequest)
                 .flatMap(it -> findBookingUseCase.find(serverRequest.pathVariable("bookingId")))
+                .flatMap(it -> ServerResponse.ok().bodyValue(BookingResponseDTO.of(it)))
+                .switchIfEmpty( Mono.defer(() -> ServerResponse.notFound().build()));
+
+    }
+
+    public Mono<ServerResponse> findAllBookings(ServerRequest serverRequest) {
+        return Mono.just(serverRequest)
+                .flatMap(it -> findAllBookingsUseCase.find())
                 .flatMap(it -> ServerResponse.ok().bodyValue(BookingResponseDTO.of(it)))
                 .switchIfEmpty( Mono.defer(() -> ServerResponse.notFound().build()));
 

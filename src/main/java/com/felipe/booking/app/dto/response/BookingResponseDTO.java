@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +17,13 @@ public class BookingResponseDTO {
 
     public static BookingResponseDTO of(Booking booking) {
         return new BookingResponseDTO(booking.getId(), booking.getCheckInDate(), booking.getCheckOutDate());
+    }
+
+    public static List<BookingResponseDTO> of(List<Booking> booking) {
+        List<BookingResponseDTO> bookingsResponse = new ArrayList<>();
+        booking.forEach(b -> {
+            bookingsResponse.add(BookingResponseDTO.of(b));
+        });
+        return bookingsResponse;
     }
 }

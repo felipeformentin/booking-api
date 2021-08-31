@@ -26,6 +26,7 @@ public class ServerRouting {
         return route(POST("/booking"), bookingHandler::createBooking)
                 .andRoute(PUT("/booking/{bookingId}"), bookingHandler::saveBooking)
                 .andRoute(GET("/booking/{bookingId}"), bookingHandler::findBooking)
+                .andRoute(GET("/booking"), bookingHandler::findAllBookings)
                 .andRoute(DELETE("/booking/{bookingId}"), bookingHandler::deleteBooking)
                 .andRoute(GET("/availability"), bookingHandler::getRoomAvailability)
                 .filter(badRequestHandler());

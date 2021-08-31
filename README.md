@@ -19,6 +19,9 @@ Postman Collection available on root folder:
 
 ### APIS
 
+- **GET /booking/** -> Returns All Booking Entities with Status 200
+  or Status 200 with empty list when we have no entities.
+
 - **GET /booking/{bookingId}** -> Returns Booking Entity with Status 200
 or Status 404 when ID does not exist.
 

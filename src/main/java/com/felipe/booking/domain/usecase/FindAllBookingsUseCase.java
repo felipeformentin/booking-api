@@ -1,0 +1,21 @@
+package com.felipe.booking.domain.usecase;
+
+import com.felipe.booking.domain.gateway.BookingDataSourceGateway;
+import com.felipe.booking.domain.model.Booking;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+
+@Component
+public class FindAllBookingsUseCase {
+
+    @Autowired
+    private BookingDataSourceGateway bookingDataSourceGateway;
+
+    public Mono<List<Booking>> find() {
+        return bookingDataSourceGateway
+                .findAllBookings();
+    }
+}
