@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     parseDate(date) {
-      return new Date(date[0], date[1], date[2]);
+      return new Date(date[0], date[1] - 1, date[2]);
     },
     readableDate(date) {
       var parsedDate = moment(date);

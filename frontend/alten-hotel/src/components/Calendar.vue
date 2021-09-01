@@ -7,12 +7,14 @@
         dismissible
         fade
         @dismiss-count-down="countDownChanged"
-
       >
         {{ message }}
       </b-alert>
-
+<b-container >
+  <b-row class="justify-content-md-center">
+    <b-col sm="6">
       <v-date-picker
+        class="mt-3"
         v-model="range"
         is-range
         :min-date="minimumDate()"
@@ -20,13 +22,18 @@
         :disabled-dates="disabledDays"
         :attributes="calendarAttributes"
         :key="disabledDays.index"
+        is-expanded
       />
+    </b-col>
+  </b-row>
+</b-container>
     </div>
     <b-button
-      class="mt-2"
+      class="mt-3"
       variant="success"
       :disabled="isMakeBookingDisabled"
       @click="makeBooking"
+      size="lg"
     >
       Make Booking
     </b-button>
@@ -75,6 +82,7 @@ export default {
           this.message = "Booking created with success!";
           this.alertClass = "success";
           this.showAlert();
+          this.$root.$emit("newBooking", "new message!");
         })
         .catch((error) => {
           this.message = error.response.data.message;

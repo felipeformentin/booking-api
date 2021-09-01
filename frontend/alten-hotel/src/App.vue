@@ -2,10 +2,10 @@
   <div id="app">
     <Main />
     <Calendar />
-    <b-container v-if="isBookingLoaded" class="mt-5">
+    <b-container v-if="isBookingLoaded" class="mt-5" :key="bookingChangeCounter">
       <h1 v-if="bookings.length > 0">Bookings</h1>
       <b-row>
-        <b-col v-for="booking in bookings" :key="booking.id">
+        <b-col sm="4" v-for="booking in bookings" :key="booking.id">
           <BookingCard :booking="booking" />
         </b-col>
       </b-row>
@@ -28,8 +28,14 @@ export default {
   },
   data() {
     return {
+      bookingChangeCounter: 0,
       isBookingLoaded: false,
     };
+  },
+  mounted: function () {
+    this.$root.$on("newBooking", (text) => {
+        this.getAllBookings();
+    });
   },
   created() {
     this.getAllBookings();
@@ -41,6 +47,8 @@ export default {
         .then((res) => {
           this.bookings = res.data;
           this.isBookingLoaded = true;
+                  this.bookingChangeCounter += 1;
+
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +65,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: aliceblue;
   height: 100vh;
 }
 </style>
