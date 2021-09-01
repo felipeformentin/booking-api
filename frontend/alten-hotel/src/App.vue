@@ -1,8 +1,24 @@
 <template>
   <div id="app">
     <Main />
-    <Calendar />
-    <b-container v-if="isBookingLoaded" class="mt-5" :key="bookingChangeCounter">
+    <Calendar :key="bookingChangeCounter"/>
+    <div>
+      <b-alert
+            class="mt-5"
+        :show="dismissCountDown"
+        v-bind:variant="alertClass"
+        dismissible
+        fade
+        @dismiss-count-down="countDownChanged"
+      >
+        {{ message }}
+      </b-alert>
+    </div>
+    <b-container
+      v-if="isBookingLoaded"
+      class="mt-5"
+      :key="bookingChangeCounter"
+    >
       <h1 v-if="bookings.length > 0">Bookings</h1>
       <b-row>
         <b-col sm="4" v-for="booking in bookings" :key="booking.id">
@@ -28,13 +44,23 @@ export default {
   },
   data() {
     return {
+      alertClass: "success",
+      dismissSecs: 5,
+      dismissCountDown: 0,
       bookingChangeCounter: 0,
       isBookingLoaded: false,
     };
   },
   mounted: function () {
     this.$root.$on("newBooking", (text) => {
-        this.getAllBookings();
+      this.getAllBookings();
+    });
+    this.$root.$on("updateBooking", (text, success) => {
+      this.message = text;
+      if (success) this.alertClass = "success";
+      else this.alertClass = "danger";
+      this.showAlert();
+      this.getAllBookings();
     });
   },
   created() {
@@ -47,12 +73,17 @@ export default {
         .then((res) => {
           this.bookings = res.data;
           this.isBookingLoaded = true;
-                  this.bookingChangeCounter += 1;
-
+          this.bookingChangeCounter += 1;
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
   },
 };

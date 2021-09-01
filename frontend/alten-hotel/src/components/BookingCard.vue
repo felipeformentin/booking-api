@@ -29,8 +29,10 @@
         </p>
       </b-card-sub-title>
 
-      <b-button class="mr-2" variant="primary" @click="updateBooking">Update Booking</b-button>
-      <b-button class="ml-2" variant="danger">Delete Booking</b-button>
+      <b-button class="mr-2" variant="primary" @click="updateBooking"
+        >Update Booking</b-button
+      >
+      <b-button class="ml-2" variant="danger" @click="deleteBooking">Delete Booking</b-button>
     </b-card>
   </div>
 </template>
@@ -61,13 +63,34 @@ export default {
         checkInDate: this.parseDateFromPicker(this.checkInDate),
         checkOutDate: this.parseDateFromPicker(this.checkOutDate),
       };
-console.log(JSON.stringify(putRequest));
-      axios.put(`http://localhost:8080/booking/${this.booking.id}`, putRequest)
+
+      axios
+        .put(`http://localhost:8080/booking/${this.booking.id}`, putRequest)
         .then((res) => {
-          console.log(res.data);
+          this.$root.$emit(
+            "updateBooking",
+            "Booking updated with success!",
+            true
+          );
         })
         .catch((error) => {
           console.log(error);
+          this.$root.$emit("updateBooking", error.response.data.message, false);
+        });
+    },
+    deleteBooking() {
+      axios
+        .delete(`http://localhost:8080/booking/${this.booking.id}`)
+        .then((res) => {
+          this.$root.$emit(
+            "updateBooking",
+            "Booking deleted with success!",
+            true
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$root.$emit("updateBooking", error.response.data.message, false);
         });
     },
     parseDate(date) {

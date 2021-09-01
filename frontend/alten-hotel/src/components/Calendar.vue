@@ -73,10 +73,13 @@ export default {
         checkInDate: this.parseDate(this.range.start),
         checkOutDate: this.parseDate(this.range.end),
       };
+                console.log("res");
 
       axios
         .post("http://localhost:8080/booking", postRequest)
-        .then(() => {
+        .then((res) => {
+          console.log(res);
+          console.log("res");
           this.getDisabledDays();
           this.range = null;
           this.message = "Booking created with success!";
