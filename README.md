@@ -1,4 +1,8 @@
+<div align="center">
+
 # ALTEN BOOKING API PROJECT
+
+</div>
 
 This project contains APIs responsible for booking rooms for a hotel.
 
@@ -16,6 +20,9 @@ Postman Collection available on root folder:
 - Java 11
 - Spring Webflux 
 - MongoDB 
+- VueJS
+- NPM
+- VCalendar
 
 ### APIS
 
@@ -75,4 +82,3 @@ and the other containing already booked dates.
 
 - Why I didn’t use @Transaction ? -> Since I create a new Booking Entity, Transactional
 wouldn't help me lock the dates, so I decided to implement Optimistic Lock
-
