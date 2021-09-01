@@ -2,7 +2,7 @@
   <div id="app">
     <Main/>
     <Calendar :key="calendarKey"/>
-    <BookCard/>
+    
   </div>
 </template>
 
