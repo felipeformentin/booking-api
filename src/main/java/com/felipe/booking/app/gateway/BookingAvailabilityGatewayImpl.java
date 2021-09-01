@@ -30,7 +30,7 @@ public class BookingAvailabilityGatewayImpl implements BookingAvailabilityGatewa
     public Mono<Set<LocalDate>> getBookedDaysMinusCurrentBooking(Booking booking) {
         return getBookedDays()
                 .flatMap(bookedDays -> bookingDataSourceGateway.findBooking(booking.getId())
-                        .map(entity -> removeCurrentBookingFromSet(booking, bookedDays)));
+                        .flatMap(entity -> removeCurrentBookingFromSet(booking, bookedDays)));
     }
 
     private Set<LocalDate> getBookedDays(List<Booking> bookings) {
@@ -50,13 +50,16 @@ public class BookingAvailabilityGatewayImpl implements BookingAvailabilityGatewa
         return bookedDays;
     }
 
-    private Set<LocalDate> removeCurrentBookingFromSet(Booking booking, Set<LocalDate> bookedDays) {
-        bookedDays.remove(booking.getCheckInDate().toLocalDate());
-        bookedDays.remove(booking.getCheckOutDate().toLocalDate());
-        if (ChronoUnit.DAYS.between(booking.getCheckInDate().toLocalDate(),
-                booking.getCheckOutDate().toLocalDate()) == 2) {
-            bookedDays.remove(booking.getCheckInDate().plusDays(1).toLocalDate());
-        }
-        return bookedDays;
+    private Mono<Set<LocalDate>> removeCurrentBookingFromSet(Booking booking, Set<LocalDate> bookedDays) {
+        return bookingDataSourceGateway.findBooking(booking.getId())
+                .map(bookingEntity -> {
+                    bookedDays.remove(bookingEntity.getCheckInDate().toLocalDate());
+                    bookedDays.remove(bookingEntity.getCheckOutDate().toLocalDate());
+                    if (ChronoUnit.DAYS.between(bookingEntity.getCheckInDate().toLocalDate(),
+                            bookingEntity.getCheckOutDate().toLocalDate()) == 2) {
+                        bookedDays.remove(bookingEntity.getCheckInDate().plusDays(1).toLocalDate());
+                    }
+                    return bookedDays;
+                });
     }
 }
