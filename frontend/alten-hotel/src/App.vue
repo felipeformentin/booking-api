@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Main/>
-    <Calendar/>
+    <Calendar :key="calendarKey"/>
     <BookCard/>
   </div>
 </template>
@@ -13,6 +13,11 @@ import BookCard from './components/BookCard.vue'
 
 
 export default {
+  data() {
+    return {
+      calendarKey: 0
+    }
+  },
   name: 'App',
   components: {
     Main,

@@ -11,11 +11,10 @@
         <p>CheckOutDate: 09/10/2021</p>
       </b-card-text>
 
-      <b-button href="#"  class="mr-2" variant="success">Update Booking</b-button>
+      <b-button href="#"  class="mr-2" variant="primary">Update Booking</b-button>
       <b-button href="#"   class="ml-2" variant="danger">Delete Booking</b-button>
     </b-card>
 
-       {{ user }}
   </div>
 </template>
 
