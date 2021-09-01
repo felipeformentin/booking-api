@@ -29,7 +29,7 @@
         </p>
       </b-card-sub-title>
 
-      <b-button class="mr-2" variant="primary">Update Booking</b-button>
+      <b-button class="mr-2" variant="primary" @click="updateBooking">Update Booking</b-button>
       <b-button class="ml-2" variant="danger">Delete Booking</b-button>
     </b-card>
   </div>
@@ -56,9 +56,28 @@ export default {
     booking: {},
   },
   methods: {
+    updateBooking() {
+      var putRequest = {
+        checkInDate: this.parseDateFromPicker(this.checkInDate),
+        checkOutDate: this.parseDateFromPicker(this.checkOutDate),
+      };
+console.log(JSON.stringify(putRequest));
+      axios.put(`http://localhost:8080/booking/${this.booking.id}`, putRequest)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     parseDate(date) {
       return new Date(date[0], date[1] - 1, date[2]);
     },
+    parseDateFromPicker(date) {
+      var parsedDate = moment(date);
+      return new Date(parsedDate.year(), parsedDate.month(), parsedDate.date());
+    },
+
     readableDate(date) {
       var parsedDate = moment(date);
       return `${parsedDate.date()}/${parsedDate.month()}/${parsedDate.year()}`;

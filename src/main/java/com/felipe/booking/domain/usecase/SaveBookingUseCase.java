@@ -26,7 +26,7 @@ public class SaveBookingUseCase {
     private Mono<Booking> saveBooking(Booking booking, BookingLock lock) {
         return validateBookingUseCase
                 .validate(booking)
-                .switchIfEmpty( Mono.defer(() ->
-                        bookingDataSourceGateway.saveBooking(booking, lock)));
+                .flatMap(it -> bookingDataSourceGateway.saveBooking(booking, lock))
+                .switchIfEmpty( Mono.defer(() -> bookingDataSourceGateway.saveBooking(booking, lock)));
         }
 }
