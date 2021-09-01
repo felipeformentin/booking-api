@@ -73,24 +73,16 @@ export default {
         checkInDate: this.parseDate(this.range.start),
         checkOutDate: this.parseDate(this.range.end),
       };
-                console.log("res");
 
       axios
         .post("http://localhost:8080/booking", postRequest)
-        .then((res) => {
-          console.log(res);
-          console.log("res");
+        .then(() => {
           this.getDisabledDays();
-          this.range = null;
-          this.message = "Booking created with success!";
-          this.alertClass = "success";
-          this.showAlert();
-          this.$root.$emit("newBooking", "new message!");
+          this.range = null; 
+          this.$root.$emit("updateBooking", "Booking created with success!", true);
         })
         .catch((error) => {
-          this.message = error.response.data.message;
-          this.alertClass = "danger";
-          this.showAlert();
+          this.$root.$emit("updateBooking", error.response.data.message, false);
         });
     },
 

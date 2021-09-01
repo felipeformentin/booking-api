@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Main />
-    <Calendar :key="bookingChangeCounter"/>
-    <div>
+  
+      <div>
       <b-alert
             class="mt-5"
         :show="dismissCountDown"
@@ -14,6 +14,7 @@
         {{ message }}
       </b-alert>
     </div>
+      <Calendar :key="bookingChangeCounter"/>
     <b-container
       v-if="isBookingLoaded"
       class="mt-5"
@@ -52,7 +53,7 @@ export default {
     };
   },
   mounted: function () {
-    this.$root.$on("newBooking", (text) => {
+    this.$root.$on("newBooking", () => {
       this.getAllBookings();
     });
     this.$root.$on("updateBooking", (text, success) => {

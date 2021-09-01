@@ -66,7 +66,7 @@ export default {
 
       axios
         .put(`http://localhost:8080/booking/${this.booking.id}`, putRequest)
-        .then((res) => {
+        .then(() => {
           this.$root.$emit(
             "updateBooking",
             "Booking updated with success!",
@@ -81,7 +81,7 @@ export default {
     deleteBooking() {
       axios
         .delete(`http://localhost:8080/booking/${this.booking.id}`)
-        .then((res) => {
+        .then(() => {
           this.$root.$emit(
             "updateBooking",
             "Booking deleted with success!",
